@@ -1,0 +1,32 @@
+{% if user.is_authenticated %}
+	<center>
+		<br>
+		<form name="UnitForm" method="POST" action="{% url 'my_data' %}">
+			{% csrf_token %}
+			<!--<input name="unit" type="hidden" value="{{ unit }}">-->
+			<button class="btn btn-outline-info" name="unit" type="submit" style="width:250px">Unit {{ unit }}: Unit Info</button>
+		</form>
+		<a href="{% url 'my_contact' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Contact Info</button></a><br>
+		<a href="{% url 'my_vehicle' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Vehicle Information</button></a><br>
+		<a href="{% url 'my_pet' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Pet Info</button></a><br>
+		<a href="{% url 'my_hoa' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: HOA Information</button></a><br>
+		<a href="{% url 'my_board' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Board Information</button></a><br>
+		<a href="{% url 'my_infractions' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Infractions</button></a><br>
+		<a href="{% url 'my_complaints' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Complaints</button></a><br>
+		<a href="{% url 'my_renovation_requests' %}"><button class="btn btn-outline-info" style="width:250px">Unit {{ unit }}: Renovation Requests</button></a><br>
+	</center>
+
+{% else %}
+	<br>
+	<center>
+		<br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Unit Information</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Contact Information</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Pet Information</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">HOA Information</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Board Information</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Infractions</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Renovation Requests</button></a><br>
+		<a href="{% url 'login' %}"><button class="btn btn-outline-info" style="width:250px">Vehicle Information</button></a><br>
+	</center>
+{% endif %}

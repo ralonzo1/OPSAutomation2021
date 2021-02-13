@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<center><h4>The Villas on Lake Oswego</h4>
+	<h6><small>668 McVey Avenue, Lake Oswego, OR 97034</small></h6></center>
+	<br>
+	<center>
+	<li class="list-group-item list-group-item-light">
+		{% if user.is_authenticated %}
+    		{% if user.is_superuser %}
+	    		{% include 'menus/super_user_home.html' %}
+    		{% else %}
+	    		<div class="row">
+			       <div class="col-md-4">
+			        {% if messages %}
+			          {% for message in messages %}
+			            <div class="alert alert-{{ message.tags }}">
+			              {{ message }}
+			            </div>
+			          {% endfor %}
+			        {% endif %}
+			        <br>
+						<!-- Adding the properties to the home page -->
+						{% for property in properties %}
+						<form method="POST" action="{% url 'main-home' %}">
+								{% csrf_token %}
+							<input name="property" type="hidden" value="{{ property }}">
+							<button class="btn btn-outline-info" name="submit" type="submit">Property: {{ property }}</button>
+						</form>
+						{% endfor %}
+						<!-- Adding the units owned within the selected property to the page rendering -->
+			        {% for unit in units %}
+			       	 <form name="UnitForm" method="POST" action="{% url 'main-home' %}">
+							    {% csrf_token %}
+							   <input name="unit" type="hidden" value="{{ unit.unit }}">
+							   <button class="btn btn-outline-info" name="submit" type="submit">Unit: {{ unit.unit }}</button>
+						 	 </form>
+			        	<!-- <a href="{% url 'main-home' %}"><button class="btn btn-outline-info" type="submit" name="submit" value="{{ unit }}">Unit: {{ unit }}</button><br> -->
+			       	{% endfor %}
+             </div>
+			       <div class="col-md-4">
+			       	<!-- The unit information from the FORM above should be set in the menu information here -->
+			       	{% if unit %}
+			         {% include 'menus/main_home_menu.html' %}
+			      	{% endif %}
+             </div>
+             <!-- If there is another unit that the owner owns, click here to add the unit -->
+          </div>
+          <br><br>
+          <div class="col-md-4">
+            <a href="{% url 'unit_check' %}">Own another unit?</a>
+          </div>
+    		{% endif %}
+    	{% else %}
+					<center><h2>The Villas at Lake Oswego Portal Login</h2></center>
+					<div class="content-section">
+						<form method="POST">
+							{% csrf_token %}
+							<fieldset class="form-group">
+								{{ form|crispy }}
+							</fieldset>
+							<div class="form-group">
+								<a href="{% url 'login' %}">Please Click Here to Login</a>
+							</div>
+						</form>
+						<div class="border-top pt-3">
+							<small class="text-muted">
+								Don't have an account? Sign up!<a class="ml-2" href="{% url 'register' %}">Register Here</a>
+							</small>
+						</div>
+					</div>
+    {% endif %}
+	</li>
+	</center>
+	<div class="article-metadata">
+		<center><a class="mr-2" href="#"></a></center>
+		<small class="text-muted"></small>
+	</div>
+
+{% endblock content %}
