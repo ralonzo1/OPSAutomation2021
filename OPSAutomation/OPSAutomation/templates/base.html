@@ -8,12 +8,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'OPSAutomation/main.css' %}">
 
    {% if title %}
-      <title>The Villas at Lake Oswego - {{ title }}</title>
+      <title>Webware Solutions OPS Management - {{ title }}</title>
    {% else %}
-      <title>The Villas at Lake Oswego</title>
+      <title>Webware Solutions OPS Management</title>
    {% endif %}
 
   </head>
@@ -22,7 +22,7 @@
      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       {% if user.is_authenticated %}<small>{{ first_name }} {{ last_name }}</small>{% endif %}
        <div class="container">
-          {% if user.is_authenticated %}<a class="navbar-brand mr-4" href="/">The Villas at Lake Oswego</a>{% else %}<a class="navbar-brand mr-4" href="{% url 'login' %}">The Villas at Lake Oswego</a>{% endif %}
+          {% if user.is_authenticated %}<a class="navbar-brand mr-4" href="/">Webware Solutions OPS Management</a>{% else %}<a class="navbar-brand mr-4" href="{% url 'login' %}">Webware Solutions OPS Management</a>{% endif %}
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
@@ -32,9 +32,17 @@
             <!-- Checking for SuperUser Rights -->
               {% if user.is_superuser %}
                 {% include 'menus/super_user.html' %}
+              {% elif board_member %}
+                {% include 'menus/board.html' %}
+              <!-- Checking if the user has db_admin rights -->
+              {% elif db_admin is True %}
+                {% include 'menus/db_admin.html' %}
               {% else %}
-                {% include 'menus/not_authenticated.html' %}
+                {% include 'menus/owner.html' %}
               {% endif %}
+            {% else %}
+             {% include 'menus/not_authenticated.html' %}
+            {% endif %}
            </div>
            <!-- Navbar Right Side -->
            <div class="navbar-nav">

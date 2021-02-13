@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-	<center><h4>The Villas on Lake Oswego</h4>
-	<h6><small>668 McVey Avenue, Lake Oswego, OR 97034</small></h6></center>
+	<center><h4>Webware Solutions OPS Management</h4>
+	<h6><small>Lake Oswego, OR 97034</small></h6></center>
 	<br>
 	<center>
 	<li class="list-group-item list-group-item-light">
@@ -52,23 +52,23 @@
           </div>
     		{% endif %}
     	{% else %}
-					<center><h2>The Villas at Lake Oswego Portal Login</h2></center>
-					<div class="content-section">
-						<form method="POST">
-							{% csrf_token %}
-							<fieldset class="form-group">
-								{{ form|crispy }}
-							</fieldset>
-							<div class="form-group">
-								<a href="{% url 'login' %}">Please Click Here to Login</a>
-							</div>
-						</form>
-						<div class="border-top pt-3">
-							<small class="text-muted">
-								Don't have an account? Sign up!<a class="ml-2" href="{% url 'register' %}">Register Here</a>
-							</small>
-						</div>
+			<center><h2>Webware Solutions OPS Management Portal Login</h2></center>
+			<div class="content-section">
+				<form method="POST">
+					{% csrf_token %}
+					<fieldset class="form-group">
+						{{ form|crispy }}
+					</fieldset>
+					<div class="form-group">
+						<a href="{% url 'login' %}">Please Click Here to Login</a>
 					</div>
+				</form>
+				<div class="border-top pt-3">
+					<small class="text-muted">
+						Don't have an account? Request Access!<a class="ml-2" href="{% url 'register' %}">Request Access</a>
+					</small>
+				</div>
+			</div>
     {% endif %}
 	</li>
 	</center>

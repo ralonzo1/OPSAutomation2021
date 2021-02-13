@@ -1,7 +1,7 @@
-{% extends "main/base.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-	<h2>Portal Login</h2>
+	<h2>Webware Solutions OPS Management</h2>
 	<div class="content-section">
 		<form method="POST">
 			{% csrf_token %}
@@ -15,7 +15,7 @@
 		</form>
 		<div class="border-top pt-3">
 			<small class="text-muted">
-				Don't have an account? Sign up here!<a class="ml-2" href="{% url 'register' %}">Register Here</a>
+				<!--Don't have an account? Sign up here!<a class="ml-2" href="{% url 'register' %}">Register Here</a>-->
 			</small>
 		</div>
 	</div>
