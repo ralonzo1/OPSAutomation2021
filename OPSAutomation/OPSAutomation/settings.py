@@ -19,7 +19,6 @@ MAIN = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -129,3 +128,13 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+#MEDIA_URL = '/media/'
+#STATIC_ROOT = os.path.join(MAIN, 'static')
+STATICFILES_DIRS = [
+    os.path.join(MAIN, "static"),
+]
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+LOGIN_REDIRECT_URL = "home"

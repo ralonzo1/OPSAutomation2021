@@ -8,8 +8,12 @@ from django.shortcuts import render
 def home(request):
     """Renders the home page."""
     content = {}
-    render(request, "home.html", {"content": content})
+    return render(request, "home.html", {"content": content})
 
+def about(request):
+    """Renders the about page."""
+    content = {}
+    return render(request, "about.html", {"content": content})
 
 def register(request):
     if request.method == "POST":
