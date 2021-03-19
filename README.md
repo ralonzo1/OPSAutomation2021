@@ -4,6 +4,8 @@ This project is designed for Webware Solutions, LLC. It is an automation framewo
 the DevOps culture and tooling transformation company-wide. The goal of the project is to
 empower the officials of the company by automating processes for scalability and agility.
 
+[![Repo Regression Check](https://github.com/ralonzo1/OPSAutomation2021/actions/workflows/repo_check.yml/badge.svg)](https://github.com/ralonzo1/OPSAutomation2021/actions/workflows/repo_check.yml)
+
 ## Prerequisites
 
 `asdf` is a tool for auto-versioning dependencies in real-time. This repository is loaded with

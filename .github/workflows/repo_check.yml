@@ -29,3 +29,5 @@ jobs:
       run: python3 --version
     - name: Run pip Installation
       run: pip3 install --upgrade pip && pip3 install -r $GITHUB_WORKSPACE/test/requirements.txt
+    - name: .env Check
+      run: python3 $GITHUB_WORKSPACE/test/env_check.py
