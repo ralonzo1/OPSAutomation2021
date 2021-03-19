@@ -1,3 +1,8 @@
+provider "aws" {
+  profile = "ops"
+  region  = "us-west-2"
+}
+
 terraform {
   backend "s3" {
     # Replace this with your bucket name!

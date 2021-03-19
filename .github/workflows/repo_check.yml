@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Repo Regression Check
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    paths:
+      - ".config/env"
+      - "test/**"
+      - .github/workflows/repo_check.yml
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ubuntu_18:
+    name: Repo Password Check
+    runs-on: ubuntu-18.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+     # Runs a single command using the runners shell
+    - name: Adding /home/runner/.local/bin to $PATH
+      run: export PATH="/home/runner/.local/bin:$PATH"
+    - name: Install/Upgrade Python 3
+      run: sudo $GITHUB_WORKSPACE/reqs/python3.sh
+    - name: Run pip Installation
+      run: pip3 install --upgrade pip && pip3 install -r $GITHUB_WORKSPACE/test/requirements.txt
