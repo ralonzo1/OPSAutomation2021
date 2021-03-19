@@ -25,6 +25,8 @@ jobs:
      # Runs a single command using the runners shell
     - name: Adding /home/runner/.local/bin to $PATH
       run: export PATH="/home/runner/.local/bin:$PATH"
+    - name: Python Version
+      run: python3 --version
     - name: Install/Upgrade Python 3
       run: sudo $GITHUB_WORKSPACE/reqs/python3.sh
     - name: Run pip Installation
