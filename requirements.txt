@@ -1,0 +1,4 @@
+# Python requirements for utilizing this project
+virtualenv==20.0.16
+python-dotenv==0.14.0
+Jinja2==2.11.2

@@ -1,0 +1,67 @@
+{% for action_item in content.action_items %}
+
+<div class="card-body">
+  <ul class="list-group list-group-flush">
+    {{ action_item|safe }}
+  </ul>
+</div>
+
+<!-- Property Information Modal -->
+<div class="modal fade propModal" id="actionItemModal-{{ action_item.id }}" tabindex="-1" aria-labelledby="actionItemModal-{{ action_item.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actionItemModal-{{ action_item.id }}">Under Development {{ action_item }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row row-cols-1">
+            <div class="col mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Info</h5>
+                </div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    {{ action_item|safe }}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Info 2</h5>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                      {{ action_item|safe }}
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Info 3</h5>
+                </div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    {{ action_item|safe }}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

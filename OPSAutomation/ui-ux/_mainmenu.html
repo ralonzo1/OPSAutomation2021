@@ -1,0 +1,71 @@
+{% load static %}
+
+<ul>
+  <li class="overview"><a href="/">Overview</a></li>
+    <!-- HOA DATA BELOW - HOA Document links are for HOA members only -->
+    <li class="title">OPS Management</li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Database
+        </a>
+      </form>
+    </li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Accounts
+        </a>
+      </form>
+    </li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Menu Item
+        </a>
+      </form>
+    </li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Menu Item
+        </a>
+      </form>
+    </li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Menu Item
+        </a>
+      </form>
+    </li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Menu Item
+        </a>
+      </form>
+    </li>
+    <li>
+      <form method="POST" action="{% url 'overview' %}">
+        {% csrf_token %}
+        <input type="hidden" name="unit_id" value="{{ content.item }}">
+        <a href="#" onclick="this.closest('form').submit();return false;">
+          Logout
+        </a>
+      </form>
+    </li>
+  </li>
+</ul>
