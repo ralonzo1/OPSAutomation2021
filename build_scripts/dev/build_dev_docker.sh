@@ -11,6 +11,7 @@ DN=$(echo ${LOC} | awk -F "/" '{print $NF}')
 
 project="OPSAutomation"
 projdir="OPSAutomation"
+DOCKER_TAG=$(echo "${project}/${projdir}:latest" | tr '[:upper:]' '[:lower:]')
 
 # Check the current directory
 if [ "${DN}" != "dev" ]; then echo "ERROR! Must be in the build_scripts/dev directory when executing the script..."; fi
@@ -64,19 +65,20 @@ install ()
         && cp ${BASE}/requirements.txt . \
         && cp ${BASE}/.tool-versions . \
         && cp -r ${BASE}/qa . \
-        && docker build . -t ${project}/${projdir}:latest \
+        && docker build . -t "${DOCKER_TAG}" \
         && remove_files # Remove the files now, to keep things clean
 
     # Runs as Daemon if this is a Github Action Runner
     if [ "${HOME}" == "/home/runner" ]; then
-        cd ${DIR} || exit 1 && docker run -td -v ${APP}:/src -v ${QA}:/qa -p 8000:8000 ${project}/${projdir}:latest /bin/bash -c "/root/${projdir}/super_user.sh"
+        cd ${DIR} || exit 1 && docker run -td -v ${APP}:/src -v ${QA}:/qa -p 8000:8000 ${DOCKER_TAG} /bin/bash -c "/root/${projdir}/super_user.sh"
     else
         # Runs interactive
-        cd ${DIR} || exit 1 && docker run -it -v ${APP}:/src -v ${QA}:/qa -p 8000:8000 ${project}/${projdir}:latest /bin/bash -c "/root/${projdir}/super_user.sh"
+        cd ${DIR} || exit 1 && docker run -it -v ${APP}:/src -v ${QA}:/qa -p 8000:8000 ${DOCKER_TAG} /bin/bash -c "/root/${projdir}/super_user.sh"
     fi
 }
 
-cd ${BASE}/docker/${projdir} \
+cd ${BASE}/docker/${projdir} || exit 1 \
+
     && if [ -f ${APP}/.superuser ]; then rm -rf ${APP}/.superuser; fi \
     && if [ -f .tool-versions ]; then rm -rf .tool-versions; fi \
     && if [ -f Dockerfile ]; then rm -rf Dockerfile; fi \

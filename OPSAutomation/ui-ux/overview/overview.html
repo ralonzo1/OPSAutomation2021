@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="overview-cards" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" data-masonry='{"percentPosition": true }'>
+  <div class="col mb-4 unitsList">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Action Items:</h5>
+      </div>
+        {% include "overview/action_items.html" %}
+    </div>
+  </div>
+
+  {% include "overview/database.html" %}
+  {% include "overview/accounts.html" %}
+
+
+</div>
+{% endblock content %}
