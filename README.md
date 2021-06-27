@@ -21,7 +21,7 @@ See [Test Docs](test/README.md)
 
 ## Table of Contents
 
-- [taluda](#taluda)
+- [OPS Automation Project](#ops-automation-project)
   - [Build Status](#build-status)
   - [Unit Tests](#unit-tests)
   - [QA Acceptance Tests](#qa-acceptance-tests)
@@ -38,7 +38,7 @@ See [Test Docs](test/README.md)
 `asdf` is a tool for auto-versioning dependencies in real-time. This repository is loaded with
 a `.tool-versions` file to manage versioning.
 
-- Python 3.7.9
+- Python 3.9.2
 - Terraform 0.14.7
 
 ### Terraform
