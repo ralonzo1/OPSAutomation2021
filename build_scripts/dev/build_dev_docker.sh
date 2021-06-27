@@ -78,7 +78,6 @@ install ()
 }
 
 cd ${BASE}/docker/${projdir} || exit 1 \
-
     && if [ -f ${APP}/.superuser ]; then rm -rf ${APP}/.superuser; fi \
     && if [ -f .tool-versions ]; then rm -rf .tool-versions; fi \
     && if [ -f Dockerfile ]; then rm -rf Dockerfile; fi \
