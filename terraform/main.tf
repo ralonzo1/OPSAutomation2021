@@ -4,13 +4,20 @@ provider "aws" {
 }
 
 terraform {
+
+  required_providers {
+    aws = {
+      version = "~> 3.35.0"
+    }
+  }
+
   backend "s3" {
     # Replace this with your bucket name!
-    bucket         = "ops-state-file"
-    key            = "webware_ops.tfstate"
-    region         = "us-west-2"
+    bucket = "ops-state-file"
+    key    = "webware_ops.tfstate"
+    region = "us-west-2"
     # Replace this with your DynamoDB table name!
-    encrypt        = true
+    encrypt = true
   }
 }
 
