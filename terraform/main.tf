@@ -30,3 +30,43 @@ resource "aws_dynamodb_table" "dynamodb-terraform-state-locks" {
     type = "S"
   }
 }
+
+module "ebs" {
+  source = "./ebs"
+}
+
+module "ec2_instance" {
+  source = "./ec2_instance"
+}
+
+module "eni" {
+  source = "./eni"
+}
+
+module "iam" {
+  source = "./iam"
+}
+
+module "igw" {
+  source = "./igw"
+}
+
+module "organization" {
+  source = "./organization"
+}
+
+module "route53" {
+  source = "./route53"
+}
+
+module "s3" {
+  source = "./s3"
+}
+
+module "sg" {
+  source = "./sg"
+}
+
+module "vpc" {
+  source = "./vpc"
+}
