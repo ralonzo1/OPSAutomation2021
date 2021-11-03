@@ -9,5 +9,6 @@ django-ckeditor==6.0.0
 django-ckeditor-staticfiles==4.3.3
 django-tempus-dominus==5.1.2.13 # Date/Time Picker
 
+pyodbc==4.0.32
 #django-okta-auth==0.8.0
 #slack_sdk==3.4.0
