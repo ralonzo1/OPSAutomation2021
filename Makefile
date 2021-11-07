@@ -38,7 +38,8 @@ install:
 	$(info ******** Installing Python Environment ********)
 	@ ./scripts/pre-configure.sh
 	@./scripts/setup.sh -c
-	@./scripts/setup.sh -i
+	@cd scripts || exit 1 && chmod +x odbc_drivers.sh && ./odbc_drivers.sh
+	@export CPPFLAGS="-I/opt/homebrew/Cellar/unixodbc/2.3.9/include" && export LDFLAGS="-L/opt/homebrew/Cellar/unixodbc/2.3.9/lib" && ./scripts/setup.sh -i
 
 super_user:
 	$(info ******** Create the SuperUser Account ********)

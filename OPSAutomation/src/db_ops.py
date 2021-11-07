@@ -18,7 +18,8 @@ import os
 import sys
 import logging
 import pyodbc
-from dotenv import load_dotenv, dotenv_values
+from dotenv import dotenv_values
+from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
 
 ### Environment Variables
 load_dotenv = ()
@@ -27,11 +28,11 @@ load_dotenv = ()
 DIR = os.path.abspath(os.path.dirname(__file__))
 ENVFILE = os.path.join(DIR, "..", "..", ".env")
 db_config = dotenv_values(ENVFILE)
-_driver = db_config["DRIVER"]
+_driver = "msodbcsql17"
 _server = db_config["SERVER"]
 _database = db_config["DATABASE"]
-_user = db_config["UID"]
-_pass = db_config["PWD"]
+_user = db_config["USER"]
+_pass = db_config["PASSWORD"]
 
 ### Logging
 logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
@@ -42,4 +43,33 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 ### Code
-DRIVER={ODBC Driver 17 for SQL Server};SERVER=_server;DATABASE=_database;UID=_user;PWD=_pass
+DIR = os.path.abspath(os.path.dirname(__file__))
+LOADER = FileSystemLoader(searchpath=os.path.join(DIR, "templates"))
+TEMPLATES = Environment(loader=LOADER, autoescape=select_autoescape())
+
+class ClientDatabase():
+    """
+    Class that creates the database object to work with.
+    
+    Args:
+        database: The database name that is to be created or worked with
+    """
+    def __init__(self, database):
+        self._clientdb = database
+
+    def create_db(self) -> None:
+        # We need to load the template from the templates location
+        _create_template = TEMPLATES.get_template("OPS_db_template.j2")
+        sqlcommand = _create_template.render(_clientdb=self._clientdb)
+
+        # We need to set variables that will create the connection string to the MSSQL database
+        _dr = 'DRIVER={_driver}'
+        _se = f"SERVER={_server}"
+        _db = 'DATABASE=master'
+
+        conn = pyodbc.connect(f"{_dr}; {_se}; {_db}; trusted_connection=true", autocommit=True)
+        cursor = conn.cursor()
+        cursor.execute(sqlcommand)
+        cursor.commit()
+        conn.commit()
+        conn.close() # Close the connection
