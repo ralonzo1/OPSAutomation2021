@@ -28,7 +28,7 @@ load_dotenv = ()
 DIR = os.path.abspath(os.path.dirname(__file__))
 ENVFILE = os.path.join(DIR, "..", "..", ".env")
 db_config = dotenv_values(ENVFILE)
-_driver = "msodbcsql17"
+_driver = db_config["DRIVER"]
 _server = db_config["SERVER"]
 _database = db_config["DATABASE"]
 _user = db_config["USER"]
@@ -63,11 +63,12 @@ class ClientDatabase():
         sqlcommand = _create_template.render(_clientdb=self._clientdb)
 
         # We need to set variables that will create the connection string to the MSSQL database
-        _dr = 'DRIVER={_driver}'
+        #_dr = 'DRIVER={ODBC Driver 17 for SQL Server}'
+        _dr = f"DRIVER={_driver}"
         _se = f"SERVER={_server}"
         _db = 'DATABASE=master'
 
-        conn = pyodbc.connect(f"{_dr}; {_se}; {_db}; trusted_connection=true", autocommit=True)
+        conn = pyodbc.connect(f"{_dr}; {_se}; {_db}", autocommit=True)
         cursor = conn.cursor()
         cursor.execute(sqlcommand)
         cursor.commit()

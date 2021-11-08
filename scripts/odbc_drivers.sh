@@ -12,3 +12,11 @@ if [[ "$(uname -p)" == "arm" ]]; then
     export LDFLAGS="-L/opt/homebrew/Cellar/unixodbc/2.3.9/lib"
     export CPPFLAGS="-I/opt/homebrew/Cellar/unixodbc/2.3.9/include"
 fi
+
+# If MacOS, ensure that the .ini file is correctly placed
+if [ $(uname) == "Darwin" ]; then
+    if [ -f /opt/homebrew/etc/odbcinst.ini ]; then
+        if [ ! -d ~/Library/ODBC ]; then mkdir -p ~/Library/ODBC; fi # Make the directory
+        cp /opt/homebrew/etc/odbcinst.ini ~/Library/ODBC/odbcinst.ini
+    fi
+fi
