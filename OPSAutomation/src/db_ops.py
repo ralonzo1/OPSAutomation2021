@@ -20,6 +20,7 @@ import logging
 import pyodbc
 from dotenv import dotenv_values
 from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
+from typing import Any
 
 ### Environment Variables
 load_dotenv = ()
@@ -27,12 +28,6 @@ load_dotenv = ()
 ### Constants
 DIR = os.path.abspath(os.path.dirname(__file__))
 ENVFILE = os.path.join(DIR, "..", "..", ".env")
-db_config = dotenv_values(ENVFILE)
-_driver = db_config["DRIVER"]
-_server = db_config["SERVER"]
-_database = db_config["DATABASE"]
-_user = db_config["USER"]
-_pass = db_config["PASSWORD"]
 
 ### Logging
 logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
@@ -43,34 +38,80 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 ### Code
-DIR = os.path.abspath(os.path.dirname(__file__))
 LOADER = FileSystemLoader(searchpath=os.path.join(DIR, "templates"))
 TEMPLATES = Environment(loader=LOADER, autoescape=select_autoescape())
 
-class ClientDatabase():
+class WebWareDb():
     """
-    Class that creates the database object to work with.
-    
-    Args:
-        database: The database name that is to be created or worked with
-    """
-    def __init__(self, database):
-        self._clientdb = database
+    Starts the initial connection to the WebWare database as an admin. This
+    gives the ability to create new users, databases, etc.
 
-    def create_db(self) -> None:
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    def __init__(self):
+        """Initialize the database object."""
+        self.db_config = dotenv_values(ENVFILE)
+        self._driver = self.db_config["DRIVER"]
+        self._server = self.db_config["SERVER"]
+        self._database = self.db_config["DATABASE"] # Main database -- usually '[master]'
+        self._sa_user = self.db_config["SA_USER"] # SQL Admin User/Pass
+        self._sa_pass = self.db_config["SA_PASSWORD"]
+        self._trust = 'Trusted_connection=yes'
+        self.webware_database = f"DRIVER={self._driver}; SERVER={self._server}; DATABASE={self._database}; UID={self._sa_user}; PWD={self._sa_pass}; {self._trust}"
+
+class DBOps(WebWareDb):
+    """This is the DbOps class that is used for main WebWare Database Operations."""
+
+    def run_query(self, query: str) -> None:
+        self.conn = pyodbc.connect(self.webware_database, autocommit=True)
+        self.csr = self.conn.cursor()
+        self.csr.execute(query)
+        self.csr.commit()
+        self.csr.close()
+        self.conn.close()
+
+    def create_new_client_database(self, database) -> None:
+        """Creates a new client database."""
         # We need to load the template from the templates location
         _create_template = TEMPLATES.get_template("OPS_db_template.j2")
-        sqlcommand = _create_template.render(_clientdb=self._clientdb)
+        query = _create_template.render(_clientdb=database)
 
         # We need to set variables that will create the connection string to the MSSQL database
-        #_dr = 'DRIVER={ODBC Driver 17 for SQL Server}'
-        _dr = f"DRIVER={_driver}"
-        _se = f"SERVER={_server}"
-        _db = 'DATABASE=master'
+        self.run_query(query=query)
 
-        conn = pyodbc.connect(f"{_dr}; {_se}; {_db}", autocommit=True)
-        cursor = conn.cursor()
-        cursor.execute(sqlcommand)
-        cursor.commit()
-        conn.commit()
-        conn.close() # Close the connection
+
+class ClientDatabase(WebWareDb):
+    """Class that creates the database object to work with."""
+
+    def __init__(self, db: str, db_user: str, db_pass: str) -> None:
+        """
+        This class returns an object that has an established connection to the respective database.
+
+        Args:
+            db (str): The client database to connect to.
+            db_user (str): The user account for working in the database.
+            db_pass (str): The password for the database user account.
+
+        Returns:
+            None
+        """
+        self.db = db
+        self.db_user = db_user
+        self.db_pass = db_pass
+        self.conn = f"DRIVER={self._driver}; SERVER={self._server}; DATABASE={self.db}; UID={self.db_user}; PWD={self.db_pass}; {self._trust}"
+
+    def run_query(self, query: str) -> None:
+        self.conn = pyodbc.connect(self.conn, autocommit=True)
+        self.csr = self.conn.cursor()
+        self.csr.execute(query)
+        self.csr.commit()
+        self.csr.close()
+        self.conn.close()
+
+    def backup(self):
+        """Runs a backup function to export the database."""
+        pass
