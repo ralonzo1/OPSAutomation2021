@@ -59,7 +59,7 @@ class WebWareDb():
         self._server = self.db_config["SERVER"]
         self._database = self.db_config["DATABASE"] # Main database -- usually '[master]'
         self._sa_user = self.db_config["SA_USER"] # SQL Admin User/Pass
-        self._sa_pass = self.db_config["SA_PASSWORD"]
+        self._sa_pass = self.db_config["SA_PASS"]
         self._trust = 'Trusted_connection=yes'
         self.webware_database = f"DRIVER={self._driver}; SERVER={self._server}; DATABASE={self._database}; UID={self._sa_user}; PWD={self._sa_pass}; {self._trust}"
 
